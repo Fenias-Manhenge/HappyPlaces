@@ -1,6 +1,5 @@
 <resources>
     <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:textSize">20sp</item>
         <item name="android:itemTextAppearance">@style/changeTextColor</item>
         <item name="android:itemBackground">?attr/colorPrimaryContainer</item>
         <item name="colorPrimary">@color/md_theme_dark_primary</item>

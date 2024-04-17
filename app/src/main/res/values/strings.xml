@@ -53,9 +53,12 @@
     <!-- Alerts Dialogs String -->
     <string name="warning">Warning</string>
     <string name="warning_disabled">Feature disabled</string>
-    <string name="warning_message">We need your permission to access the camera feature!</string>
+    <string name="warning_camera_message">We need your permission to access the camera feature!</string>
+    <string name="warning_storage_message">We need your permission to access the storage feature!</string>
     <string name="warning_message_disabled">
         You have denied the necessary permissions to use the camera.
         Please go to the app settings to grant the permissions.
     </string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
 </resources>
