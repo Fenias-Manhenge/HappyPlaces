@@ -6,7 +6,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 
-var PERMISSION_DENIED_BEFORE = false
+var CAMERA_PERMISSION_DENIED_BEFORE = false
+var STORAGE_PERMISSION_DENIED_BEFORE = false
 
 /*
     Storage Permissions Logic

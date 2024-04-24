@@ -1,27 +1,32 @@
 package com.example.happyplaces
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.LocusId
 import android.net.Uri
 import android.provider.Settings
+import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object ShowingDialogs {
     fun rationalDialogCamera(
         activity: AppCompatActivity,
-        askPermissions: ActivityResultLauncher<Array<String>>) {
+        askPermissions: ActivityResultLauncher<Array<String>>
+    ) {
         MaterialAlertDialogBuilder(activity)
             .setCancelable(false)
             .setIcon(R.drawable.high_importance_48px)
             .setTitle(activity.resources.getString(R.string.warning))
             .setMessage(activity.resources.getString(R.string.warning_camera_message))
             .setPositiveButton("Okay!") { _, _ ->
-                PERMISSION_DENIED_BEFORE = true
+                CAMERA_PERMISSION_DENIED_BEFORE = true
                 askPermissions.launch(CAMERA_PERMISSIONS)
             }
             .setNegativeButton("Cancel") { dialog, _ ->
-                PERMISSION_DENIED_BEFORE = true
+                CAMERA_PERMISSION_DENIED_BEFORE = true
                 dialog.dismiss()
             }
             .show()
@@ -29,18 +34,19 @@ object ShowingDialogs {
 
     fun rationalDialogStorage(
         activity: AppCompatActivity,
-        askPermissions: ActivityResultLauncher<Array<String>>) {
+        askPermissions: ActivityResultLauncher<Array<String>>
+    ) {
         MaterialAlertDialogBuilder(activity)
             .setCancelable(false)
             .setIcon(R.drawable.high_importance_48px)
             .setTitle(activity.resources.getString(R.string.warning))
             .setMessage(activity.resources.getString(R.string.warning_storage_message))
             .setPositiveButton("Okay!") { _, _ ->
-                PERMISSION_DENIED_BEFORE = true
+                STORAGE_PERMISSION_DENIED_BEFORE = true
                 askPermissions.launch(STORAGE_PERMISSIONS)
             }
             .setNegativeButton("Cancel") { dialog, _ ->
-                PERMISSION_DENIED_BEFORE = true
+                STORAGE_PERMISSION_DENIED_BEFORE = true
                 dialog.dismiss()
             }
             .show()

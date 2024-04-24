@@ -14,8 +14,12 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.happyplaces.databinding.AddHappyPlaceBinding
+import com.example.happyplaces.room_database.PlaceEntity
+import com.example.happyplaces.room_database.PlacesDao
 import com.google.android.material.datepicker.MaterialDatePicker
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -56,6 +60,12 @@ class AddHappyPlace : AppCompatActivity() {
 
         binding.btnAddImage.setOnClickListener {
             addImageMenu(it, R.menu.add_photo_popup_menu)
+        }
+
+        val placesDao = (application as ApplicationHappyPlace).dataBase.placeDao()
+
+        binding.btnSave.setOnClickListener {
+            addPlaceIntoDataBase(placesDao = placesDao)
         }
     }
 
@@ -111,7 +121,7 @@ class AddHappyPlace : AppCompatActivity() {
         }
 
         if (!permissionGranted){
-            if (!PERMISSION_DENIED_BEFORE)
+            if (!STORAGE_PERMISSION_DENIED_BEFORE)
                 showStoragePermissionRationalDialog()
             else
                 showSettingsRationalDialog()
@@ -120,7 +130,6 @@ class AddHappyPlace : AppCompatActivity() {
                 photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
-
 
     private val photoPicker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
         if (uri != null)
@@ -140,7 +149,7 @@ class AddHappyPlace : AppCompatActivity() {
         }
 
         if (!permissionGranted){
-            if (!PERMISSION_DENIED_BEFORE) {
+            if (!CAMERA_PERMISSION_DENIED_BEFORE) {
                 showCameraPermissionRationalDialog()
             } else
                 showSettingsRationalDialog()
@@ -158,5 +167,16 @@ class AddHappyPlace : AppCompatActivity() {
 
     private fun showStoragePermissionRationalDialog(){
         ShowingDialogs.rationalDialogStorage(this, askStoragePermission)
+    }
+
+    private fun addPlaceIntoDataBase(placesDao: PlacesDao){
+        lifecycleScope.launch {
+            val title = binding.etTitle.text.toString()
+            val description = binding.etDescription.text.toString()
+            val date = binding.etDate.text.toString()
+            val location = binding.etLocation.text.toString()
+
+            placesDao.insertPlace(PlaceEntity(title, description, date, location, "0.0", "0.0"))
+        }
     }
 }
